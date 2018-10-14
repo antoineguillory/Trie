@@ -7,6 +7,7 @@ struct _list {
 	char letter;          /* etiquette de la transition      */
 	struct _list *next;   /* maillon suivant                 */
 };
+
 typedef struct _list *List;
 
 struct _trie {
@@ -15,6 +16,8 @@ struct _trie {
 	List *transition; /* listes d’adjacence                  */
 	char *finite;     /* etats terminaux                     */
 };
+
+typedef struct _trie *Trie;
 
 #endif
 

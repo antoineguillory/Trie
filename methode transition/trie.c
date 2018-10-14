@@ -95,6 +95,23 @@ int isInTrie(Trie trie, char *w) {
 	return 1;
 }
 
+Trie build_prefixes(char * w){
+    /* Un automate qui reconnait un mot unique et dont tout les états sont finaux va reconnaitre exactement tout les préfixes.*/
+    Trie trie = createTrie(strlen(w)+1);
+    insertInTrie(trie,w);
+    for(unsigned int i = 0; i!=strlen(w); ++i){
+        finite[i]='1';
+    }
+}
+
+Trie build_suffixes(char *w) {
+    Trie trie = createTrie(strlen(w) + 1);
+    for (int i = 0; i <= strlen(w); ++i) {
+        insertInTrie(trie, w + i);
+    }
+    return result;
+}
+
 void testAffichage(Trie trie, int maxNode){
     /*On considère que c'est des mots uniquement avec a et b pour les tests..*/
     for(int i=0; i<maxNode; ++i){
