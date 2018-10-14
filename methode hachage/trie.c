@@ -21,19 +21,20 @@ Trie createTrie(unsigned int maxNode) {
 
 Trie build_prefixes(char * w){
     /* Un automate qui reconnait un mot unique et dont tout les états sont finaux va reconnaitre exactement tout les préfixes.*/
-    Trie trie = createTrie(strlen(w)+1);
+    Trie trie = createTrie((unsigned int)strlen(w)+1);
     insertInTrie(trie,w);
     for(unsigned int i = 0; i!=strlen(w); ++i){
-        finite[i]='1';
+        trie->finite[i]='1';
     }
+    return trie;
 }
 
 Trie build_suffixes(char *w) {
-    Trie trie = createTrie(strlen(w) + 1);
-    for (int i = 0; i <= strlen(w); ++i) {
+    Trie trie = createTrie((unsigned int)strlen(w) + 1);
+    for (unsigned int i = 0; i <= strlen(w); ++i) {
         insertInTrie(trie, w + i);
     }
-    return result;
+    return trie;
 }
 
 /* Totalement inspire par la fonction des paires de cantor

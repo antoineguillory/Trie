@@ -97,24 +97,25 @@ int isInTrie(Trie trie, char *w) {
 
 Trie build_prefixes(char * w){
     /* Un automate qui reconnait un mot unique et dont tout les états sont finaux va reconnaitre exactement tout les préfixes.*/
-    Trie trie = createTrie(strlen(w)+1);
+    Trie trie = createTrie((unsigned int)strlen(w)+1);
     insertInTrie(trie,w);
     for(unsigned int i = 0; i!=strlen(w); ++i){
-        finite[i]='1';
+        trie->finite[i]='1';
     }
+    return trie;
 }
 
 Trie build_suffixes(char *w) {
-    Trie trie = createTrie(strlen(w) + 1);
-    for (int i = 0; i <= strlen(w); ++i) {
+    Trie trie = createTrie((unsigned int)strlen(w) + 1);
+    for (unsigned int i = 0; i <= strlen(w); ++i) {
         insertInTrie(trie, w + i);
     }
-    return result;
+    return trie;
 }
 
-void testAffichage(Trie trie, int maxNode){
+void testAffichage(Trie trie){
     /*On considère que c'est des mots uniquement avec a et b pour les tests..*/
-    for(int i=0; i<maxNode; ++i){
+    for(int i=0; i<trie->maxNode; ++i){
         for(int j=A_ASCII_CODE; j!=B_ASCII_CODE+1; ++j){
             printf("%d ",trie->transition[i][j]);
         }
@@ -123,11 +124,13 @@ void testAffichage(Trie trie, int maxNode){
     printf("Etats finaux : %s \n", trie->finite);
     
     
-    puts("est dans le trie ?\n");
+   /* puts("est dans le trie ?\n");
     printf("doit renvoyer 0 : %d\n",isInTrie(trie,"ababaaa"));
     printf("doit renvoyer 1 : %d\n",isInTrie(trie,"bbbb"));
     printf("doit renvoyer 1 : %d\n",isInTrie(trie,"abababba"));
-	printf("doit renvoyer 0 : %d\n",isInTrie(trie,"abababb"));
+	printf("doit renvoyer 0 : %d\n",isInTrie(trie,"abababb")); */
+
+
     
 }
 
@@ -144,6 +147,16 @@ int main(void){
     insertInTrie(trie, test2);
     printf("l'insertion n'a rien fait exploser...\n");
     printf("lancement du test ...\n");
-    testAffichage(trie, 10);
+    testAffichage(trie);
+
+    Trie trisuff = build_suffixes("baba");
+
+    Trie tripref = build_prefixes("abababa");
+    testAffichage(trisuff);
+
+    puts("\n");
+
+    testAffichage(tripref);
+
     return 0;
 }
