@@ -107,7 +107,7 @@ Trie build_prefixes(char * w){
 
 Trie build_suffixes(char *w) {
     Trie trie = createTrie((unsigned int)strlen(w) + 1);
-    for (unsigned int i = 0; i <= strlen(w); ++i) {
+    for (unsigned int i = 0; i <= strlen(w)-1; ++i) {
         insertInTrie(trie, w + i);
     }
     return trie;
@@ -115,14 +115,18 @@ Trie build_suffixes(char *w) {
 
 void testAffichage(Trie trie){
     /*On considère que c'est des mots uniquement avec a et b pour les tests..*/
+    puts("  A  B\n");
     for(int i=0; i<trie->maxNode; ++i){
+        printf("%d|",i);
         for(int j=A_ASCII_CODE; j!=B_ASCII_CODE+1; ++j){
-            printf("%d ",trie->transition[i][j]);
+            printf("%d ", trie->transition[i][j]);
         }
         puts("\n");
     }
-    printf("Etats finaux : %s \n", trie->finite);
-    
+    puts("Etats finaux :\n");
+    for(unsigned int j=0; j<=strlen(trie->finite)-1;++j){
+        printf("%d : %c\n",j,trie->finite[j]);
+    }    
     
    /* puts("est dans le trie ?\n");
     printf("doit renvoyer 0 : %d\n",isInTrie(trie,"ababaaa"));
@@ -145,17 +149,19 @@ int main(void){
     insertInTrie(trie, test);
     char* test2 = "bbbb";
     insertInTrie(trie, test2);
-    printf("l'insertion n'a rien fait exploser...\n");
-    printf("lancement du test ...\n");
-    testAffichage(trie);
-
+    //testAffichage(trie);
+    puts("test suffixes\n");
     Trie trisuff = build_suffixes("baba");
+    puts("suffixes buildés\n");
 
+    puts("test prefixes\n");
     Trie tripref = build_prefixes("abababa");
+    puts("prefixes buildé\n");
+
+    puts("SUFFIXES :\n");
     testAffichage(trisuff);
 
-    puts("\n");
-
+    puts("\nPREFIXES : \n");
     testAffichage(tripref);
 
     return 0;
