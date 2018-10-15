@@ -32,13 +32,14 @@ void insertInTrie(Trie trie, unsigned char *w) {
     }
     int noeud = 0;
 
+    /* Pour chaque symbole dans w */
     while (w != NULL && *w != '\0') {
 
-        /*On determine le hash de cette transition*/
-        int key = hasher(trie->maxNode, startNode, letter);
+        /*On determine le hash de la transition*/
+        int key = hasher(noeud, *w);
         List list = trie->transition[key];
 
-        /*On regarde si un tel maillon existe. Si c'est le cas, on le skippe*/
+        /*On regarde si un tel maillon existe dans la hashtable. Si c'est le cas, on le skippe*/
         List found = find_maillon_in_list(list, noeud, *w);
         if (found != NULL) {
             continue;
@@ -65,8 +66,9 @@ void insertInTrie(Trie trie, unsigned char *w) {
         head->letter = *w;
         head->next = list;
         
-
         trie->transition[key] = head;
+
+        noeud = head->targetNode;
 
         ++w;
     }
@@ -107,8 +109,6 @@ Trie build_suffixes(unsigned char *w) {
     }
     return trie;
 }
-
-
 
 int main(void){
     for(int i = 1; i!=99; ++i){
